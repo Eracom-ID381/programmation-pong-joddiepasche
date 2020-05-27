@@ -1,6 +1,7 @@
 let scoreLeft = 0;
 let scoreRight = 0;
 
+
 let ball = {
     x: 0,
     y: 0,
@@ -9,19 +10,11 @@ let ball = {
     radius: 40
 }
 
-let paddleLeft = {
-    x: 30,
-    y: 0,
-    width: 20,
-    height: 150
-}
+let paddleLeft;
 
-let paddleRight = {
-    x: 0,
-    y: 0,
-    width: 20,
-    height: 150
-}
+let paddleRight;
+
+let paddleMiddle;
 
 
 function setup() {
@@ -29,10 +22,13 @@ function setup() {
     rectMode(CENTER);
     noStroke();
 
+    paddleLeft = new Paddle(30, 0, 20, 150);
+    paddleRight = new Paddle(width - 30, 0, 20, 150);
+    paddleMiddle = new Paddle(width / 2, 0, 20, 150);
+
     ball.x = width / 2;
     ball.y = height / 2;
 
-    paddleRight.x = width - 30;
 }
 
 function draw() {
@@ -41,20 +37,25 @@ function draw() {
     moveBall();
     bounceBall();
     drawElements();
+    paddleLeft.afficher();
+    paddleRight.afficher();
+
+
+    paddleLeft.bouger(mouseX);
+    paddleRight.bouger(mouseY);
+
+
 }
 
 function drawElements() {
-    paddleRight.y = mouseY;
-    paddleLeft.y = mouseX;
-    rect(paddleLeft.x, paddleLeft.y, paddleLeft.width, paddleLeft.height);
-    rect(paddleRight.x, paddleRight.y, paddleRight.width, paddleRight.height);
+
     ellipse(ball.x, ball.y, ball.radius);
     textSize(100);
     textAlign(RIGHT)
     text(scoreLeft, width / 2 - 40, 100);
     textAlign(LEFT)
 
-    text(scoreRight, width/2 + 40 , 100);
+    text(scoreRight, width / 2 + 40, 100);
 
     for (let y = 0; y < height; y = y + 30) {
         rect(width / 2, y, 20, 20);
@@ -68,9 +69,10 @@ function bounceBall() {
         ball.y <= paddleRight.y + paddleRight.height / 2) {
         ball.speedX = -ball.speedX;
         ball.speedY = random(-5, 5);
+
     }
 
-    // Detection de collision Paddle Left 
+    // Detection de collision Paddle Left
     if (ball.x <= paddleLeft.x + paddleLeft.width * 2 &&
         ball.y >= paddleLeft.y - paddleLeft.height / 2 &&
         ball.y <= paddleLeft.y + paddleLeft.height / 2) {
@@ -92,11 +94,6 @@ function bounceBall() {
     }
 }
 
-function movePaddle() {
-    paddleRight.y = mouseY;
-    paddleLeft.y = mouseX;
-}
-
 function moveBall() {
     ball.x += ball.speedX;
     ball.y += ball.speedY;
@@ -108,6 +105,23 @@ function resetBall() {
     ball.speedX = -ball.speedX;
     ball.speedY = random(-2, 2);
 
+}
+
+class Paddle {
+    constructor(_x, _y, _largeur, _hauteur) {
+        this.x = _x;
+        this.y = _y;
+        this.width = _largeur;
+        this.height = _hauteur;
+    }
+
+    bouger(mouseAxis) {
+        this.y = mouseAxis;
+    }
+
+    afficher() {
+        rect(this.x, this.y, this.width, this.height)
+    }
 }
 
 function windowResized() {
