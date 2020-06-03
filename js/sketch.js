@@ -7,7 +7,7 @@ let ball = {
     y: 0,
     speedX: 10,
     speedY: 0,
-    radius: 40
+    radius: 80
 }
 
 let paddleLeft;
@@ -22,8 +22,8 @@ function setup() {
     rectMode(CENTER);
     noStroke();
 
-    paddleLeft = new Paddle(30, 0, 20, 150);
-    paddleRight = new Paddle(width - 30, 0, 20, 150);
+    paddleLeft = new Paddle(30, 0, 40, 150);
+    paddleRight = new Paddle(width - 30, 0, 40, 150);
     paddleMiddle = new Paddle(width / 2, 0, 20, 150);
 
     ball.x = width / 2;
@@ -33,7 +33,7 @@ function setup() {
 
 function draw() {
     background(0);
-    fill(0, 255, 0);
+    fill(random(10, 200), random(10, 200), random(10, 200));
     moveBall();
     bounceBall();
     drawElements();
