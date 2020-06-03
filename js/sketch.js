@@ -33,7 +33,7 @@ function setup() {
 
 function draw() {
     background(0);
-    fill(255);
+    fill(0, 255, 0);
     moveBall();
     bounceBall();
     drawElements();
@@ -113,6 +113,7 @@ class Paddle {
         this.y = _y;
         this.width = _largeur;
         this.height = _hauteur;
+
     }
 
     bouger(mouseAxis) {
