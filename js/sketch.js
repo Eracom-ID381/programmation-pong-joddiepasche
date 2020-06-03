@@ -50,7 +50,7 @@ function draw() {
 function drawElements() {
 
     ellipse(ball.x, ball.y, ball.radius);
-    textSize(100);
+    textSize(130);
     textAlign(RIGHT)
     text(scoreLeft, width / 2 - 40, 100);
     textAlign(LEFT)
